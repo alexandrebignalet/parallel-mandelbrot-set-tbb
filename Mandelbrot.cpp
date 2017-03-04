@@ -51,9 +51,6 @@ void Mandelbrot::process_par_dyn(MandelbrotDataModel& mandel) {
 
     parallel_for( blocked_range<int>(0, this->image_height),
                   [&]( blocked_range<int> r ) {
-//                      for_each ( r.begin(), r.end(),
-//                                 [&](size_t line){ this->process_line(mandel[line]); }
-//                      );
                       for (int i = r.begin(); i < r.end(); i++ ) {
                           this->process_line(mandel[i]);
                       }
@@ -63,22 +60,15 @@ void Mandelbrot::process_par_dyn(MandelbrotDataModel& mandel) {
 
 void Mandelbrot::process_line(vector<Point>& mandel_line) {
 
-    for(int x = 0; x < this->image_width; x++) {
-        Point *p = &mandel_line[x];
-
-        while ( p->absSq() < DIVERGENCE_LIMIT && p->getLastIter() < this->iter_max) {
-            p->next();
-        }
-    }
-
-//    for_each(mandel_line.begin(), mandel_line.end(),
-//             [&](int i) {
-//                 Point *p = &mandel_line[i];
-//                 while ( p->absSq() < DIVERGENCE_LIMIT && p->getLastIter() < this->iter_max) {
-//                     p->next();
-//                 }
-//             }
-//    );
+    for_each(mandel_line.begin(), mandel_line.end(),
+             [&](Point &p) {
+                 if (!p.isCardioidOrBulb()) {
+                     while ( p.absSq() < DIVERGENCE_LIMIT && p.getLastIter() < this->iter_max) {
+                         p.next();
+                     }
+                 }
+             }
+    );
 }
 
 void Mandelbrot::process_par_static(

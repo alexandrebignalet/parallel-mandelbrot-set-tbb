@@ -20,6 +20,16 @@ void Point::next() {
     this->last_iter++;
 }
 
+bool Point::isCardioidOrBulb() {
+    double b = ( this->zx + 1 ) * ( this->zx + 1 ) + this->zy * this->zy;
+
+    double q = ( this->zx - 1/4 ) * ( this->zx - 1/4 ) + this->zy * this->zy;
+    double c = q * ( q + (this->zx - 1/4) );
+
+    return c < (this->zy * this->zy)/4 && b < 1/16;
+
+}
+
 double Point::abs() {
     return sqrt ((this->zx * this->zx) + (this->zy * this->zy));
 }

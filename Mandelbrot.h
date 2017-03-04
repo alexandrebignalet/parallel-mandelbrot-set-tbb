@@ -33,6 +33,7 @@ struct Mandelbrot {
                             vector<vector<Point>>::iterator left,
                             vector<vector<Point>>::iterator right,
                             int seuil);
+
     MandelbrotDataModel initDataModel(double x_limit, double y_limit);
     void drawGraph(MandelbrotDataModel mandel, string name);
 };
