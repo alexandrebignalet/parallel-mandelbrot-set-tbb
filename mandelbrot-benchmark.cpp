@@ -78,6 +78,11 @@ int main(int argc, char *argv[])
 
         for ( int rep = 0; rep < repetition_nb; rep++) {
 
+          mandelbrot_graph_seq = mandel->initDataModel(-2,2);
+          mandelbrot_graph_par_dyn = mandel->initDataModel(-2,2);
+          mandelbrot_graph_par_static = mandel->initDataModel(-2,2);
+          mandelbrot_graph_par= mandel->initDataModel(-2,2);
+          
           task_scheduler_init init( nb_threads );
 
           // Debut de la mesure du temps d'execution sequentiel.
