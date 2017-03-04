@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
             // Debut de la mesure du temps d'execution parellele avec repartition statique.
             debut = tick_count::now();
             mandel->process_par_static(mandelbrot_graph_par_static, mandelbrot_graph_par_static.begin(),
-                                       mandelbrot_graph_par_static.end(), 500);
+                                       mandelbrot_graph_par_static.end(), 1);
             fin = tick_count::now();
             temps_par_static = (fin - debut).seconds();
 
