@@ -62,6 +62,8 @@ int main(int argc, char *argv[])
         temps_par_static_sum = 0;
         temps_par_sum = 0;
 
+        task_scheduler_init init( nb_threads );
+
         for (int warming = 0; warming < warming_up_nb; warming++) {
 
             mandelbrot_graph_seq = mandel->initDataModel(-2,2);
@@ -81,9 +83,7 @@ int main(int argc, char *argv[])
           mandelbrot_graph_seq = mandel->initDataModel(-2,2);
           mandelbrot_graph_par_dyn = mandel->initDataModel(-2,2);
           mandelbrot_graph_par_static = mandel->initDataModel(-2,2);
-          mandelbrot_graph_par= mandel->initDataModel(-2,2);
-          
-          task_scheduler_init init( nb_threads );
+          mandelbrot_graph_par = mandel->initDataModel(-2,2);
 
           // Debut de la mesure du temps d'execution sequentiel.
           debut = tick_count::now();
