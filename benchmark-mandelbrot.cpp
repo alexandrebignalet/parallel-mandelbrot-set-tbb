@@ -87,10 +87,11 @@ int main(int argc, char *argv[]) {
             printf( "%10.1f ", temps_s/temps_par_static );
             printf( "%10.1f ", temps_s/temps_par );
             printf( "\n" );
+
+            temps_par_dyn_sum += temps_par_dyn;
+            temps_par_static_sum += temps_par_static;
+            temps_par_sum += temps_par;
         }
-        temps_par_dyn_sum += temps_par_dyn;
-        temps_par_static_sum += temps_par_static;
-        temps_par_sum += temps_par;
 
         printf("# avg par_dyn: %.3f \n", temps_par_dyn_sum / warming_iter);
         printf("# avg par_static: %.3f \n", temps_par_static_sum / warming_iter);
