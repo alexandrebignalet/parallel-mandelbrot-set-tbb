@@ -95,7 +95,7 @@ int main(int argc, char *argv[]) {
 
         printf("# avg par_dyn: %.3f \n", temps_par_dyn_sum / warming_iter);
         printf("# avg par_static: %.3f \n", temps_par_static_sum / warming_iter);
-        printf("# avg par: %.3f \n", temps_par_static_sum / warming_iter);
+        printf("# avg par: %.3f \n", temps_par_sum / warming_iter);
     }
 
     mandel->drawGraph(mandelbrot_graph_par_dyn, "mandelbrot_ppm_par_dyn.ppm");
