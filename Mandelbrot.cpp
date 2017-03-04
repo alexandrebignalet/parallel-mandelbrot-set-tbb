@@ -40,12 +40,22 @@ void Mandelbrot::process_seq(MandelbrotDataModel& mandel) {
     }
 }
 
+void Mandelbrot::process_par(MandelbrotDataModel& mandel) {
+
+    parallel_for ( 0, this->image_height,
+                 [&](int i){ this->process_line(mandel[i]); }
+    );
+}
+
 void Mandelbrot::process_par_dyn(MandelbrotDataModel& mandel) {
 
     parallel_for( blocked_range<int>(0, this->image_height),
                   [&]( blocked_range<int> r ) {
-                      for( int y = r.begin(); y < r.end(); y++ ) {
-                          this->process_line(mandel[y]);
+//                      for_each ( r.begin(), r.end(),
+//                                 [&](size_t line){ this->process_line(mandel[line]); }
+//                      );
+                      for (int i = r.begin(); i < r.end(); i++ ) {
+                          this->process_line(mandel[i]);
                       }
                   }
     );
@@ -60,6 +70,15 @@ void Mandelbrot::process_line(vector<Point>& mandel_line) {
             p->next();
         }
     }
+
+//    for_each(mandel_line.begin(), mandel_line.end(),
+//             [&](int i) {
+//                 Point *p = &mandel_line[i];
+//                 while ( p->absSq() < DIVERGENCE_LIMIT && p->getLastIter() < this->iter_max) {
+//                     p->next();
+//                 }
+//             }
+//    );
 }
 
 void Mandelbrot::process_par_static(
@@ -75,6 +94,9 @@ void Mandelbrot::process_par_static(
             auto i = std::distance(mandel.begin(), it);
             this->process_line(mandel[i]);
         }
+//        for_each(left, right,
+//                 [&](int line) { this->process_line(mandel[line]); }
+//        );
 
     } else {
         auto midPosition = (right - left) / 2;
