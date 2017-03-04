@@ -1,0 +1,8 @@
+cmake-build-debug/
+main
+mandel
+CMakeLists.txt
+mandelbrot.ppm
+mandelbrot_ppm_par_dyn.ppm
+mandelbrot_ppm_par_static.ppm
+mandelbrot_ppm_seq.ppm
