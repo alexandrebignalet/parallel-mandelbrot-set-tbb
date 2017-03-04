@@ -14,13 +14,17 @@ mandelbrot:
 	$(COMPILER) $(FILES) -o mandel $(OPTIONS)
 
 # should generate files for gnuplot
-bm: mandelbrot
-	./mandel 640 480 150
-	./mandel 1280 720 200
-	./mandel 1920 1080 250
-	./mandel 2560 2048 300
-	./mandel 3840 2160 400
-	./mandel 5120 4096 500
+bm: data_bm
+
+graphes_acc:
+	./plot-acc.sh 1280x720 200 6
+	./plot-acc.sh 1920x1080 250 6
+	./plot-acc.sh 3840x2160 400 6
+
+data_bm:
+	./mandel 1280 720 200 > ./benchmarks/temps-1280x720-200.txt
+	./mandel 1920 1080 250 > ./benchmarks/temps-1920x1080-250.txt
+	./mandel 3840 2160 400 > ./benchmarks/temps-3840x2160-400.txt
 
 # should run the tests
 tests: $(default)
