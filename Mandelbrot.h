@@ -25,8 +25,13 @@ struct Mandelbrot {
 
     Mandelbrot(int width, int height, int iter_max, double zoom);
 
+    void process_line(vector<Point>& mandel_line);
     void process_seq(MandelbrotDataModel& mandel);
-    void process_par(MandelbrotDataModel& mandel);
+    void process_par_dyn(MandelbrotDataModel& mandel);
+    void process_par_static(MandelbrotDataModel& mandel,
+                            vector<vector<Point>>::iterator left,
+                            vector<vector<Point>>::iterator right,
+                            int seuil);
     MandelbrotDataModel initDataModel(double x_limit, double y_limit);
     void drawGraph(MandelbrotDataModel mandel, string name);
 };

@@ -7,7 +7,7 @@ OPTIONS=-m64 -ltbb -std=c++11
 FILES = benchmark-mandelbrot.cpp Mandelbrot.cpp Mandelbrot.h Point.cpp Point.h
 
 default: benchmark-mandelbrot
-	./mandel 3840 2160 400
+	./mandel 1920 1080 250
 
 
 benchmark-mandelbrot:

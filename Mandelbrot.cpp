@@ -6,6 +6,7 @@
 #include <algorithm>
 #include "tbb/blocked_range.h"
 #include "tbb/parallel_for.h"
+#include "tbb/parallel_invoke.h"
 
 using namespace tbb;
 
@@ -35,33 +36,53 @@ Mandelbrot::Mandelbrot(int width, int height, int iter_max, double zoom) {
 void Mandelbrot::process_seq(MandelbrotDataModel& mandel) {
 
     for (int y = 0; y < this->image_height; y++) {
-        for(int x = 0; x < this->image_width; x++) {
-            Point *p = &mandel[y][x];
-
-            while ( p->absSq() < DIVERGENCE_LIMIT && p->getLastIter() < this->iter_max) {
-                p->next();
-            }
-        }
+        this->process_line(mandel[y]);
     }
 }
 
-void Mandelbrot::process_par(MandelbrotDataModel& mandel) {
+void Mandelbrot::process_par_dyn(MandelbrotDataModel& mandel) {
 
     parallel_for( blocked_range<int>(0, this->image_height),
                   [&]( blocked_range<int> r ) {
                       for( int y = r.begin(); y < r.end(); y++ ) {
-
-                          for(int x = 0; x < this->image_width; x++) {
-                              Point *p = &mandel[y][x];
-
-                              while ( p->absSq() < DIVERGENCE_LIMIT && p->getLastIter() < this->iter_max) {
-                                  p->next();
-                              }
-                          }
-
+                          this->process_line(mandel[y]);
                       }
                   }
     );
+}
+
+void Mandelbrot::process_line(vector<Point>& mandel_line) {
+
+    for(int x = 0; x < this->image_width; x++) {
+        Point *p = &mandel_line[x];
+
+        while ( p->absSq() < DIVERGENCE_LIMIT && p->getLastIter() < this->iter_max) {
+            p->next();
+        }
+    }
+}
+
+void Mandelbrot::process_par_static(
+        MandelbrotDataModel& mandel,
+        vector<vector<Point>>::iterator left,
+        vector<vector<Point>>::iterator right,
+        int seuil)
+{
+
+    if (right - left <= seuil) {
+
+        for ( auto it = left ; it < right; ++it ) {
+            auto i = std::distance(mandel.begin(), it);
+            this->process_line(mandel[i]);
+        }
+
+    } else {
+        auto midPosition = (right - left) / 2;
+        vector<vector<Point>>::iterator middle = left + midPosition;
+
+        parallel_invoke ( [&] { this->process_par_static(mandel, left, middle, seuil);},
+                          [&] { this->process_par_static(mandel, middle, right, seuil);} );
+    }
 }
 
 void Mandelbrot::drawGraph(MandelbrotDataModel mandel, string name) {
@@ -93,6 +114,8 @@ void Mandelbrot::drawGraph(MandelbrotDataModel mandel, string name) {
 
     fclose(fp);
 }
+
+
 
 MandelbrotDataModel Mandelbrot::initDataModel(double x_limit, double y_limit) {
     MandelbrotDataModel mandel(this->image_height, vector<Point> (this->image_width, Point(0,0)));
