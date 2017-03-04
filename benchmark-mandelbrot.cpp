@@ -47,6 +47,10 @@ int main(int argc, char *argv[]) {
     MandelbrotDataModel mandelbrot_graph_par;
 
     for( int nb_threads = 1; nb_threads <= nb_threads_max; nb_threads *= 2 ) {
+        temps_par_dyn_sum = 0;
+        temps_par_static_sum = 0;
+        temps_par_sum = 0;
+
         for (int warming = 0; warming < warming_iter; warming++) {
 
             mandelbrot_graph_par_dyn = mandel->initDataModel(-2,2);
