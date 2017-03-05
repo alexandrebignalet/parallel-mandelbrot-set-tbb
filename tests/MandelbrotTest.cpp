@@ -48,16 +48,16 @@ bool mandelbrot_generes_egaux(int width, int height, int iter_max, double zoom, 
   MandelbrotDataModel graph_seq = mandel->initDataModel(x_min,y_max);
   MandelbrotDataModel graph_par_dyn = mandel->initDataModel(x_min,y_max);
   MandelbrotDataModel graph_par_static = mandel->initDataModel(x_min,y_max);
-  MandelbrotDataModel graph_par = mandel->initDataModel(x_min,y_max);
+  MandelbrotDataModel graph_par_static_better = mandel->initDataModel(x_min,y_max);
 
   mandel->process_seq(graph_seq);
   mandel->process_par_dyn(graph_par_dyn);
   mandel->process_par_static(graph_par_static, graph_par_static.begin(), graph_par_static.end(), 1);
-  mandel->process_par(graph_par);
+  mandel->process_par_static_better(graph_par_static_better, graph_par_static_better.begin(), graph_par_static_better.end(), 1);
 
   return mandelbrot_egaux(graph_seq, graph_par_dyn) &&
          mandelbrot_egaux(graph_seq, graph_par_static) &&
-         mandelbrot_egaux(graph_seq, graph_par);
+         mandelbrot_egaux(graph_seq, graph_par_static_better);
 }
 
 // Cas de tests Mandelbrot(int width, int height, int iter_max, double zoom)

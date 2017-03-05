@@ -17,6 +17,5 @@ set xtics (1, 2, 4, 8, 16, 32, 64, 128)
 plot [0.9:150][0:$max] \
 	 "./benchmarks/data-files/temps-$taille-$iter_max.txt" using 1:(\$2) title "seq" with linespoints ls 1,\
 	 "./benchmarks/data-files/temps-$taille-$iter_max.txt" using 1:(\$3) title "par dyn" with linespoints ls 2,\
-	 "./benchmarks/data-files/temps-$taille-$iter_max.txt" using 1:(\$4) title "par statique" with linespoints ls 3,\
-	 "./benchmarks/data-files/temps-$taille-$iter_max.txt" using 1:(\$5) title "par" with linespoints ls 4
+	 "./benchmarks/data-files/temps-$taille-$iter_max.txt" using 1:(\$4) title "par statique" with linespoints ls 3
 EOF

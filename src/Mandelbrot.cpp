@@ -40,13 +40,6 @@ void Mandelbrot::process_seq(MandelbrotDataModel& mandel) {
     }
 }
 
-void Mandelbrot::process_par(MandelbrotDataModel& mandel) {
-
-    parallel_for ( 0, this->image_height,
-                 [&](int i){ this->process_line(mandel[i]); }
-    );
-}
-
 void Mandelbrot::process_par_dyn(MandelbrotDataModel& mandel) {
 
     parallel_for( blocked_range<int>(0, this->image_height),
@@ -73,8 +66,8 @@ void Mandelbrot::process_line(vector<Point>& mandel_line) {
 
 void Mandelbrot::process_par_static(
         MandelbrotDataModel& mandel,
-        vector<vector<Point>>::iterator left,
-        vector<vector<Point>>::iterator right,
+        MandelbrotDataModel::iterator left,
+        MandelbrotDataModel::iterator right,
         int nb_threads)
 {
     int seuil = this->image_height / nb_threads;
@@ -88,10 +81,33 @@ void Mandelbrot::process_par_static(
 
     } else {
         auto midPosition = (right - left) / 2;
-        vector<vector<Point>>::iterator middle = left + midPosition;
+        MandelbrotDataModel::iterator middle = left + midPosition;
 
         parallel_invoke ( [&] { this->process_par_static(mandel, left, middle, seuil);},
                           [&] { this->process_par_static(mandel, middle, right, seuil);} );
+    }
+}
+
+void Mandelbrot::process_par_static_better(
+        MandelbrotDataModel& mandel,
+        MandelbrotDataModel::iterator left,
+        MandelbrotDataModel::iterator right,
+        int seuil)
+{
+
+    if (right - left <= seuil) {
+
+        for ( auto it = left ; it < right; ++it ) {
+            auto i = std::distance(mandel.begin(), it);
+            this->process_line(mandel[i]);
+        }
+
+    } else {
+        auto midPosition = (right - left) / 2;
+        MandelbrotDataModel::iterator middle = left + midPosition;
+
+        parallel_invoke ( [&] { this->process_par_static(mandel, left, middle, seuil); },
+                          [&] { this->process_par_static(mandel, middle, right, seuil); } );
     }
 }
 
