@@ -1,7 +1,6 @@
 mandel
-!images
 images/
 mandel_mandelbrot_tests
 mandel_points_tests
-!benchmarks/mandelbrot-benchmark.cpp
 benchmarks/
+!benchmarks/mandelbrot-benchmark.cpp
