@@ -28,7 +28,7 @@ graphes_temps:
 	./benchmarks/scripts/plot-temps.sh 640x360 $(ITER_MAX) 0.1
 	./benchmarks/scripts/plot-temps.sh 1280x720 $(ITER_MAX) 0.5
 	./benchmarks/scripts/plot-temps.sh 1920x1080 $(ITER_MAX) 1
-	./benchmarks/scripts/plot-temps.sh 3840x2160 $(ITER_MAX) 2
+	./benchmarks/scripts/plot-temps.sh 3840x2160 $(ITER_MAX) 3
 
 data_bm:
 	./mandel 640 360 $(ITER_MAX) > ./benchmarks/data-files/temps-640x360-$(ITER_MAX).txt
