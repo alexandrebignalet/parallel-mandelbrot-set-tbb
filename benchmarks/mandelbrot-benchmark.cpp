@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     int width = atoi( argv[1] );
     int height = atoi( argv[2] );
 
-    int iter_max = 500;
+    int iter_max = 100;
     if ( argc > 3 ) {
         // L'itération maximale est optionnelle.
         iter_max = atoi( argv[3] );
@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     const int warming_up_nb = 5;
     const int repetition_nb = 5;
 
-    Mandelbrot *mandel = new Mandelbrot(width, height, iter_max, 4.0);
+    Mandelbrot *mandel = new Mandelbrot(width, height, iter_max, 3.5);
 
     printf("Creating a mandelbrot set image %dx%d with %d iterations.\n", width, height, iter_max);
 
@@ -66,10 +66,10 @@ int main(int argc, char *argv[])
 
         for (int warming = 0; warming < warming_up_nb; warming++) {
 
-            mandelbrot_graph_seq = mandel->initDataModel(-2,2);
-            mandelbrot_graph_par_dyn = mandel->initDataModel(-2,2);
-            mandelbrot_graph_par_static = mandel->initDataModel(-2,2);
-            mandelbrot_graph_par= mandel->initDataModel(-2,2);
+            mandelbrot_graph_seq = mandel->initDataModel(-2,1);
+            mandelbrot_graph_par_dyn = mandel->initDataModel(-2,1);
+            mandelbrot_graph_par_static = mandel->initDataModel(-2,1);
+            mandelbrot_graph_par= mandel->initDataModel(-2,1);
 
             mandel->process_seq(mandelbrot_graph_seq);
             mandel->process_par_dyn(mandelbrot_graph_par_dyn);

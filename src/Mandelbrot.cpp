@@ -18,10 +18,10 @@ tuple<int, int, int> get_rgb_smooth(int n, int iter_max) {
     double t = (double)n/(double)iter_max;
 
     // Use smooth polynomials for r, g, b
-    int r = (int)(9*(1-t)*t*255);
-    int g = (int)(15*(1-t)*(1-t)*t*t*t*255);
-    int b =  (int)(8.5*(1-t)*(1-t)*(1-t)*t*t*255);
-    return std::tuple<int, int, int>(r, g, b);
+    int r = (int)(9*(1-t)*t*t*t*255);
+    int g = (int)(15*(1-t)*(1-t)*t*t*255);
+    int b =  (int)(8.5*(1-t)*(1-t)*(1-t)*t*255);
+    return tuple<int, int, int>(r, g, b);
 }
 
 Mandelbrot::Mandelbrot(int width, int height, int iter_max, double zoom) {

@@ -8,7 +8,7 @@ FILES = src/Mandelbrot.cpp src/include/Mandelbrot.h src/Point.cpp src/include/Po
 TESTS_LIB = ./tests/lib/MiniCUnit.c ./tests/lib/MiniCUnit.h
 
 default: mandelbrot
-	./mandel 1920 1080 50
+	./mandel 1200 1200 200
 
 mandelbrot:
 	$(COMPILER) ./benchmarks/mandelbrot-benchmark.cpp $(FILES) -o mandel $(OPTIONS)
@@ -17,22 +17,22 @@ mandelbrot:
 bm: data_bm
 
 graphes_acc:
-	./scripts/plot-acc.sh 640x360 50 70
-	./scripts/plot-acc.sh 1280x720 50 70
-	./scripts/plot-acc.sh 1920x1080 50 70
-	./scripts/plot-acc.sh 3840x2160 50 70
+	./benchmarks/scripts/plot-acc.sh 640x360 200 70
+	./benchmarks/scripts/plot-acc.sh 1280x720 200 70
+	./benchmarks/scripts/plot-acc.sh 1920x1080 200 70
+	./benchmarks/scripts/plot-acc.sh 3840x2160 200 70
 
 graphes_temps:
-	./scripts/plot-temps.sh 640x360 50 0,3
-	./scripts/plot-temps.sh 1280x720 50 1
-	./scripts/plot-temps.sh 1920x1080 50 10
-	./scripts/plot-temps.sh 3840x2160 50 20
+	./benchmarks/scripts/plot-temps.sh 640x360 200 0.3
+	./benchmarks/scripts/plot-temps.sh 1280x720 200 1
+	./benchmarks/scripts/plot-temps.sh 1920x1080 200 10
+	./benchmarks/scripts/plot-temps.sh 3840x2160 200 20
 
 data_bm:
-	./mandel 640 360 50 > ./benchmarks/data-files/temps-640x360-50.txt
-	./mandel 1280 720 50 > ./benchmarks/data-files/temps-1280x720-50.txt
-	./mandel 1920 1080 50 > ./benchmarks/data-files/temps-1920x1080-50.txt
-	./mandel 3840 2160 50 > ./benchmarks/data-files/temps-3840x2160-50.txt
+	./mandel 640 360 200 > ./benchmarks/data-files/temps-640x360-200.txt
+	./mandel 1280 720 200 > ./benchmarks/data-files/temps-1280x720-200.txt
+	./mandel 1920 1080 200 > ./benchmarks/data-files/temps-1920x1080-200.txt
+	./mandel 3840 2160 200 > ./benchmarks/data-files/temps-3840x2160-200.txt
 
 
 test:
@@ -46,3 +46,5 @@ clean:
 	\rm -f mandel_mandelbrot_tests
 	\rm -f mandel_points_tests
 	\rm -f *~
+	\rm -f ./benchmarks/plots/*.png
+	\rm -f ./benchmarks/data-files/*.txt
