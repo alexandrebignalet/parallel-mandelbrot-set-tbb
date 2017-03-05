@@ -14,7 +14,7 @@ mandelbrot:
 	$(COMPILER) ./benchmarks/mandelbrot-benchmark.cpp $(FILES) -o mandel $(OPTIONS)
 
 
-bm: data_bm
+bm: mandelbrot data_bm
 
 ITER_MAX = 200
 
