@@ -8,8 +8,8 @@ FILES = src/Mandelbrot.cpp src/include/Mandelbrot.h src/Point.cpp src/include/Po
 TESTS_LIB = ./tests/lib/MiniCUnit.c ./tests/lib/MiniCUnit.h
 
 ITER_MAX = 200
-WARMUP_NB = 10
-REPETITION_NB = 10
+WARMUP_NB = 5
+REPETITION_NB = 5
 
 default: mandelbrot
 	./mandel 1200 1200 $(WARMUP_NB) $(REPETITION_NB) $(ITER_MAX)

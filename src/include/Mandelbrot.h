@@ -32,7 +32,7 @@ struct Mandelbrot {
     void process_par_static(MandelbrotDataModel& mandel,
                             vector<vector<Point>>::iterator left,
                             vector<vector<Point>>::iterator right,
-                            int seuil);
+                            int nb_threads);
 
     MandelbrotDataModel initDataModel(double x_limit, double y_limit);
     void drawGraph(MandelbrotDataModel mandel, string name);

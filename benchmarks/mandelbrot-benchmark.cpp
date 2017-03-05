@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
             mandel->process_par_dyn(mandelbrot_graph_par_dyn);
             mandel->process_par(mandelbrot_graph_par);
             mandel->process_par_static(mandelbrot_graph_par_static, mandelbrot_graph_par_static.begin(),
-                                       mandelbrot_graph_par_static.end(), 1);
+                                       mandelbrot_graph_par_static.end(), nb_threads);
         }
 
         for ( int rep = 0; rep < repetition_nb; rep++) {
@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
           // Debut de la mesure du temps d'execution parellele avec repartition statique.
           debut = tick_count::now();
           mandel->process_par_static(mandelbrot_graph_par_static, mandelbrot_graph_par_static.begin(),
-                                     mandelbrot_graph_par_static.end(), 1);
+                                     mandelbrot_graph_par_static.end(), nb_threads);
           fin = tick_count::now();
           temps_par_static = (fin - debut).seconds();
 

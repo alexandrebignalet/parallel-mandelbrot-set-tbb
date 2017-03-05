@@ -75,8 +75,9 @@ void Mandelbrot::process_par_static(
         MandelbrotDataModel& mandel,
         vector<vector<Point>>::iterator left,
         vector<vector<Point>>::iterator right,
-        int seuil)
+        int nb_threads)
 {
+    int seuil = this->image_height / nb_threads;
 
     if (right - left <= seuil) {
 
@@ -84,9 +85,6 @@ void Mandelbrot::process_par_static(
             auto i = std::distance(mandel.begin(), it);
             this->process_line(mandel[i]);
         }
-//        for_each(left, right,
-//                 [&](int line) { this->process_line(mandel[line]); }
-//        );
 
     } else {
         auto midPosition = (right - left) / 2;
