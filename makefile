@@ -16,7 +16,7 @@ mandelbrot:
 
 bm: data_bm
 
-ITER_MAX = 50
+ITER_MAX = 200
 
 graphes_acc:
 	./benchmarks/scripts/plot-acc.sh 640x360 $(ITER_MAX) 70
