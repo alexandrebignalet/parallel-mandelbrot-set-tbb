@@ -1,6 +1,6 @@
 #include <iostream>
 #include <assert.h>
-#include "./src/include/Mandelbrot.h"
+#include "../src/include/Mandelbrot.h"
 #include "tbb/tick_count.h"
 #include "tbb/task_scheduler_init.h"
 
