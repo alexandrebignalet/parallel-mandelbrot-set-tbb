@@ -30,8 +30,9 @@ struct Point
     // optimization function
     // checking if the point is in the cardiod or in the period-2 bulb
     // before entering in the escape-time algorithm
-    bool isCardioidOrBulb();
+    bool isWithinCardioid();
 
     int getLastIter();
 };
+
 #endif //MANDELBROT_POINT_H_H

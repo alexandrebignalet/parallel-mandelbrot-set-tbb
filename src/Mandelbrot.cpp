@@ -62,7 +62,7 @@ void Mandelbrot::process_line(vector<Point>& mandel_line) {
 
     for_each(mandel_line.begin(), mandel_line.end(),
              [&](Point &p) {
-                 if (!p.isCardioidOrBulb()) {
+                 if (!p.isWithinCardioid()) {
                      while ( p.absSq() < DIVERGENCE_LIMIT && p.getLastIter() < this->iter_max) {
                          p.next();
                      }
@@ -100,7 +100,7 @@ void Mandelbrot::process_par_static(
 void Mandelbrot::drawGraph(MandelbrotDataModel mandel, string name)
 {
     const char *path = name.c_str();
-    
+
     FILE *fp = fopen(path, "wb");
 
     if (fp == NULL) {

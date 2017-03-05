@@ -1,6 +1,6 @@
 #include <cmath>
 #include "./include/Point.h"
-
+#include <stdio.h>
 using namespace std;
 
 Point::Point(double x, double y) {
@@ -20,13 +20,13 @@ void Point::next() {
     this->last_iter++;
 }
 
-bool Point::isCardioidOrBulb() {
-    double b = ( this->zx + 1 ) * ( this->zx + 1 ) + this->zy * this->zy;
+bool Point::isWithinCardioid() {
+    // double b = (( this->zx + 1 ) * ( this->zx + 1 )) + (this->zy * this->zy);
 
-    double q = ( this->zx - 1/4 ) * ( this->zx - 1/4 ) + this->zy * this->zy;
-    double c = q * ( q + (this->zx - 1/4) );
+    double p = sqrt( ((this->zx - 0.25)*(this->zx - 0.25))+(this->zy*this->zy) );
+    double c = p - (2*p*p) + 0.25;
 
-    return c < (this->zy * this->zy)/4 && b < 1/16;
+    return this->zx < c;
 
 }
 
