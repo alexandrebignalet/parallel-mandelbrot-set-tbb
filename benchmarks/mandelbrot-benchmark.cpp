@@ -20,8 +20,8 @@ int main(int argc, char *argv[])
         iter_max = atoi( argv[3] );
     }
 
-    const int warming_up_nb = 5;
-    const int repetition_nb = 5;
+    const int warming_up_nb = 10;
+    const int repetition_nb = 10;
 
     Mandelbrot *mandel = new Mandelbrot(width, height, iter_max, 3.5);
 
