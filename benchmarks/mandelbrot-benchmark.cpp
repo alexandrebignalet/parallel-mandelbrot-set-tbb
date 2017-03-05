@@ -11,17 +11,18 @@ int main(int argc, char *argv[])
 
     // On obtient les arguments.
     assert( argc > 2 );
+
     int width = atoi( argv[1] );
     int height = atoi( argv[2] );
 
-    int iter_max = 100;
-    if ( argc > 3 ) {
-        // L'itération maximale est optionnelle.
-        iter_max = atoi( argv[3] );
-    }
+    const int warming_up_nb = atoi( argv[3] );
+    const int repetition_nb = atoi( argv[4] );
 
-    const int warming_up_nb = 10;
-    const int repetition_nb = 10;
+    int iter_max = 100;
+    if ( argc > 4 ) {
+        // L'itération maximale est optionnelle.
+        iter_max = atoi( argv[5] );
+    }
 
     Mandelbrot *mandel = new Mandelbrot(width, height, iter_max, 3.5);
 

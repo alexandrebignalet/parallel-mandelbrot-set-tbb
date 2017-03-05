@@ -7,16 +7,18 @@ OPTIONS=-m64 -ltbb -std=c++11
 FILES = src/Mandelbrot.cpp src/include/Mandelbrot.h src/Point.cpp src/include/Point.h
 TESTS_LIB = ./tests/lib/MiniCUnit.c ./tests/lib/MiniCUnit.h
 
+ITER_MAX = 200
+WARMUP_NB = 10
+REPETITION_NB = 10
+
 default: mandelbrot
-	./mandel 1200 1200 200
+	./mandel 1200 1200 $(WARMUP_NB) $(REPETITION_NB) $(ITER_MAX)
 
 mandelbrot:
 	$(COMPILER) ./benchmarks/mandelbrot-benchmark.cpp $(FILES) -o mandel $(OPTIONS)
 
 
 bm: mandelbrot data_bm
-
-ITER_MAX = 200
 
 graphes_acc:
 	./benchmarks/scripts/plot-acc.sh 640x360 $(ITER_MAX) 70
@@ -31,10 +33,10 @@ graphes_temps:
 	./benchmarks/scripts/plot-temps.sh 3840x2160 $(ITER_MAX) 3
 
 data_bm:
-	./mandel 640 360 $(ITER_MAX) > ./benchmarks/data-files/temps-640x360-$(ITER_MAX).txt
-	./mandel 1280 720 $(ITER_MAX) > ./benchmarks/data-files/temps-1280x720-$(ITER_MAX).txt
-	./mandel 1920 1080 $(ITER_MAX) > ./benchmarks/data-files/temps-1920x1080-$(ITER_MAX).txt
-	./mandel 3840 2160 $(ITER_MAX) > ./benchmarks/data-files/temps-3840x2160-$(ITER_MAX).txt
+	./mandel 640 360 $(WARMUP_NB) $(REPETITION_NB) $(ITER_MAX) > ./benchmarks/data-files/temps-640x360-$(ITER_MAX).txt
+	./mandel 1280 720 $(WARMUP_NB) $(REPETITION_NB) $(ITER_MAX) > ./benchmarks/data-files/temps-1280x720-$(ITER_MAX).txt
+	./mandel 1920 1080 $(WARMUP_NB) $(REPETITION_NB) $(ITER_MAX) > ./benchmarks/data-files/temps-1920x1080-$(ITER_MAX).txt
+	./mandel 3840 2160 $(WARMUP_NB) $(REPETITION_NB) $(ITER_MAX) > ./benchmarks/data-files/temps-3840x2160-$(ITER_MAX).txt
 
 
 test:
