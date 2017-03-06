@@ -106,8 +106,8 @@ void Mandelbrot::process_par_static_better(
         auto midPosition = (right - left) / 2;
         MandelbrotDataModel::iterator middle = left + midPosition;
 
-        parallel_invoke ( [&] { this->process_par_static(mandel, left, middle, seuil); },
-                          [&] { this->process_par_static(mandel, middle, right, seuil); } );
+        parallel_invoke ( [&] { this->process_par_static_better(mandel, left, middle, seuil); },
+                          [&] { this->process_par_static_better(mandel, middle, right, seuil); } );
     }
 }
 

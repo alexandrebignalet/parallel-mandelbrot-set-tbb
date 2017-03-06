@@ -73,8 +73,8 @@ int main(int argc, char *argv[])
             mandel->process_par_dyn(mandelbrot_graph_par_dyn);
             mandel->process_par_static(mandelbrot_graph_par_static, mandelbrot_graph_par_static.begin(),
                                        mandelbrot_graph_par_static.end(), nb_threads);
-           // a task will be equal to one line
-           mandel->process_par_static_better(mandelbrot_graph_par_static_better, mandelbrot_graph_par_static_better.begin(),
+            // a task will be equal to one image
+            mandel->process_par_static_better(mandelbrot_graph_par_static_better, mandelbrot_graph_par_static_better.begin(),
                                       mandelbrot_graph_par_static_better.end(), 1);
         }
 
@@ -97,19 +97,19 @@ int main(int argc, char *argv[])
           fin = tick_count::now();
           temps_par_dyn = (fin - debut).seconds();
 
-          // Debut de la mesure du temps d'execution parellele avec repartition statique cyclique egale entre les threads.
-          debut = tick_count::now();
-          mandel->process_par_static(mandelbrot_graph_par_static, mandelbrot_graph_par_static.begin(),
-                                     mandelbrot_graph_par_static.end(), nb_threads);
-          fin = tick_count::now();
-          temps_par_static = (fin - debut).seconds();
-
           // Debut de la mesure du temps d'execution parellele avec repartition statique cyclique de 1.
           debut = tick_count::now();
           mandel->process_par_static_better(mandelbrot_graph_par_static_better, mandelbrot_graph_par_static_better.begin(),
                                      mandelbrot_graph_par_static_better.end(), 1);
           fin = tick_count::now();
           temps_par_static_better = (fin - debut).seconds();
+
+          // Debut de la mesure du temps d'execution parellele avec repartition statique cyclique egale entre les threads.
+          debut = tick_count::now();
+          mandel->process_par_static(mandelbrot_graph_par_static, mandelbrot_graph_par_static.begin(),
+                                     mandelbrot_graph_par_static.end(), nb_threads);
+          fin = tick_count::now();
+          temps_par_static = (fin - debut).seconds();
 
           temps_par_dyn_sum += temps_par_dyn;
           temps_seq_sum += temps_s;
@@ -128,11 +128,11 @@ int main(int argc, char *argv[])
 
         printf( "%10.3f ", par_dyn_avg );
         printf( "%10.3f ", par_static_avg );
-        printf( "%10.3f ", par_static_better_avg ); // 12 17 10 13
+        printf( "%12.3f ", par_static_better_avg );
 
-        printf( "%10.1f ", seq_avg/par_dyn_avg );
+        printf( "%17.1f ", seq_avg/par_dyn_avg );
         printf( "%10.1f", seq_avg/par_static_avg );
-        printf( "%10.1f", seq_avg/par_static_better_avg );
+        printf( "%14.1f", seq_avg/par_static_better_avg );
         printf( "\n" );
     }
 
